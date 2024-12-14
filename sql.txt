@@ -1,0 +1,53 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY, -- 고유 유저 ID
+    username VARCHAR(50) NOT NULL UNIQUE, -- 사용자 이름
+    password VARCHAR(100) NOT NULL, -- 암호 (암호화된 값 저장)
+    email VARCHAR(100) NOT NULL UNIQUE, -- 이메일
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 계정 생성 날짜
+);
+
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY, -- 고유 게시글 ID
+    user_id INT NOT NULL, -- 작성자 ID (users 테이블과 연계)
+    title VARCHAR(255) NOT NULL, -- 게시글 제목
+    content TEXT NOT NULL, -- 게시글 내용
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 작성 시간
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 수정 시간
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE -- 작성자가 삭제되면 게시글도 삭제
+);
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY, -- 고유 댓글 ID
+    post_id INT NOT NULL, -- 댓글이 작성된 게시글 ID (posts 테이블과 연계)
+    user_id INT NOT NULL, -- 댓글 작성자 ID (users 테이블과 연계)
+    content TEXT NOT NULL, -- 댓글 내용
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 댓글 작성 시간
+    FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE, -- 게시글 삭제 시 댓글 삭제
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE -- 유저 삭제 시 댓글 삭제
+);
+
+====================================================
+	1.	Users → Posts (1:N)
+	•	한 명의 유저는 여러 개의 게시글을 작성할 수 있습니다.
+	•	users.id ↔ posts.user_id
+	2.	Posts → Comments (1:N)
+	•	하나의 게시글에는 여러 개의 댓글이 작성될 수 있습니다.
+	•	posts.id ↔ comments.post_id
+	3.	Users → Comments (1:N)
+	•	한 명의 유저는 여러 개의 댓글을 작성할 수 있습니다.
+	•	users.id ↔ comments.user_id
+
+====================================================
+sample data
+
+INSERT INTO users (username, password, email)
+VALUES ('john_doe', 'hashed_password_1', 'john@example.com'),
+       ('jane_doe', 'hashed_password_2', 'jane@example.com');
+
+INSERT INTO posts (user_id, title, content)
+VALUES (1, 'First Post', 'This is the content of the first post.'),
+       (2, 'Second Post', 'This is the content of the second post.');
+
+INSERT INTO comments (post_id, user_id, content)
+VALUES (1, 2, 'This is a comment by Jane on John\'s post.'),
+       (2, 1, 'This is a comment by John on Jane\'s post.');

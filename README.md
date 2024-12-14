@@ -11,7 +11,7 @@
    - 데이터베이스와 테이블 설계를 진행합니다.
 2. **SQL 스크립트 실행**
    - PostgreSQL Shell(SQL Shell 또는 Command Line)에서 설계된 스크립트를 실행합니다.
-
+![img.png](sqlresult.png)
 ---
 
 ## 3. MyBatis Mapper 작성
@@ -37,9 +37,15 @@
 
 ---
 
-## 7. 컨트롤러 생성
+## 7. 컨트롤러 생성 (API & MVC)
 - `com.security.daegucatholic.controller` 패키지에 컨트롤러 클래스를 생성  
   - 예: `UserController.java`
+
+---
+
+## 7.5 테스트 코드 작성 
+- *** 에러 발생 ***
+  - postgresql 문제 (권한) 
 
 ---
 
