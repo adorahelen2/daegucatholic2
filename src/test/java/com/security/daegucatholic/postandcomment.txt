@@ -1,0 +1,35 @@
+코드 설명
+
+1. testFindPosts
+	•	데이터베이스에 이미 존재하는 게시글(First Post, Second Post)을 검증.
+	•	게시글 내용과 개수를 확인.
+
+2. testCreateAndDeletePost
+	•	새로운 게시글을 생성 후 데이터베이스에서 확인.
+	•	생성된 게시글을 삭제하고 데이터베이스에서 삭제 여부를 검증.
+
+3. testFindCommentsForPost
+	•	특정 게시글(예: post_id=1)에 대한 댓글 조회 및 검증.
+	•	댓글의 개수와 내용을 확인.
+
+4. testCreateAndDeleteComment
+	•	특정 게시글에 새로운 댓글을 추가.
+	•	댓글 추가 여부를 확인 후 삭제.
+	•	삭제 여부를 최종적으로 검증.
+
+===============================================
+
+추가 사항
+	1.	PostService와 CommentService 메서드:
+	•	getAllPosts(): 모든 게시글을 조회.
+	•	createPost(Post post): 게시글 생성.
+	•	deletePostById(Long id): 게시글 삭제.
+	•	getCommentsByPostId(Long postId): 특정 게시글의 댓글 조회.
+	•	createComment(Comment comment): 댓글 생성.
+	•	deleteCommentById(Long id): 댓글 삭제.
+
+	2.	테스트 격리:
+	•	데이터베이스 초기화가 중요합니다. H2와 같은 인메모리 데이터베이스를 사용하는 것이 추천됩니다.
+
+	3.	SQL 스크립트 초기화:
+	•	테스트 실행 전 @Sql을 사용하여 데이터베이스를 초기화하면 데이터 정합성을 유지할 수 있습니다.
